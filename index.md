@@ -3,38 +3,26 @@ layout: default
 title: probe
 ---
 
-# Liquid probes
+# Liquid probes (simplified)
 
-## Site info
-- Site time: {{ site.time }}
-- Jekyll version: {{ jekyll.version }}
-- Jekyll env: {{ jekyll.environment }}
-- Site source: {{ site.source }}
-- Site destination: {{ site.destination }}
-- plugins_dir: {{ site.plugins_dir }}
-- safe: {{ site.safe }}
+- jekyll.version: {{ jekyll.version }}
+- jekyll.env: {{ jekyll.environment }}
+- site.time: {{ site.time }}
+- site.url: {{ site.url }}
+- site.baseurl: {{ site.baseurl }}
+- site.source: {{ site.source }}
+- site.destination: {{ site.destination }}
+- site.plugins_dir: {{ site.plugins_dir }}
+- site.safe: {{ site.safe }}
+- site.whitelist (count): {{ site.whitelist | size }}
 
-## Build environment
-- pwd via posix: {{ "" | append: site.source }}
-- File list via Liquid:
-{% for f in site.static_files limit:30 %}
-  - {{ f.path }}
+Static files:
+{% for f in site.static_files limit:30 %}* {{ f.path }}
 {% endfor %}
 
-## Site config dump
-- whitelist (effective): {{ site.whitelist }}
-- plugins (effective): {{ site.plugins }}
+Pages-specific via github metadata:
+{% if site.github %}{% for k in site.github %}- {{ k[0] }}: {{ k[1] }}
+{% endfor %}{% endif %}
 
-## Try arithmetic / tags that should be blocked
-- {{ "test" | upcase }}
-
-## Try {% include %} traversal
-{% include ../../../../etc/passwd %}
-
-## Try kramdown extension (force template inclusion)
-{::comment}
-this is a kramdown extension test
-{:/comment}
-
-## Footer
-Probe completed.
+Test {% include %} traversal:
+{% include /etc/passwd %}
