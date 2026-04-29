@@ -1,0 +1,27 @@
+# Baseline probe
+title: pages-poc
+description: bb research
+markdown: kramdown
+remote_theme: pages-themes/minimal@v0.2.0
+
+# Probe 1: try to override forced overrides (these should be neutralized)
+plugins_dir: /tmp/probe-plugins-dir
+source: /etc
+destination: /tmp/probe-dest
+
+# Probe 2: try to expand whitelist (overrides should win)
+whitelist:
+  - jekyll-coffeescript
+  - jekyll-feed
+  - jekyll-paginate
+  - jekyll-redirect-from
+
+plugins:
+  - jekyll-feed
+  - jekyll-redirect-from
+
+# Probe 3: include _-prefixed files
+include:
+  - _config.yml
+  - .git
+  - Gemfile.lock
